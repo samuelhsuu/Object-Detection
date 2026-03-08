@@ -15,18 +15,28 @@ if not cap.isOpened():
 CONFIDENCE_THRESHOLD = 0.4
 prev_time = time.time()
 
+SKIP_FRAMES = 2
+frame_count = 0
+last_results = [] # previous frame detections
+
 while True:
   #frame is a 3d array containing image data
   ret, frame = cap.read()
 
+  frame_count+=1
+
+  if frame_count % SKIP_FRAMES == 0:
+    # run inference on every other frame
+    last_results = model(frame, conf=CONFIDENCE_THRESHOLD, imgsz = 320, verbose=False)
+
   if not ret:
     print("Error: failed to read frame")
     break
-  #model is called like a function to analyze the current frame
-  results = model(frame, conf=CONFIDENCE_THRESHOLD, verbose=False)
+  #model is called like a function to analyze the current frame, specify imgsz for optimization
+  # results = model(frame, conf=CONFIDENCE_THRESHOLD, imgsz = 320, verbose=False)
 
   #results only really has one item (the current frame)
-  for result in results:
+  for result in last_results:
     #each box has all detections >0.4 confidence
     for box in result.boxes:
       x1, y1, x2, y2 = map(int, box.xyxy[0])
