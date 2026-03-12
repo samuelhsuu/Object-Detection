@@ -4,7 +4,7 @@ import time
 from collections import deque, defaultdict
 
 # Load model weights (small)
-model = YOLO("yolov8s.pt")
+model = YOLO("yolov8n.pt")
 # Open camera, can also use filepath for video
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
@@ -46,7 +46,11 @@ def draw_sidebar(frame, fps, detection_counts, total_objects):
   y+=LINE_H
 
   # FPS
-  fps_color = (50, 255, 100) if fps>20 else(50, 100, 255)
+  fps_color = (255, 255, 255)
+  if(fps<10):
+    fps_color = (0, 0, 255)
+  elif(fps>15):
+    fps_color = (0, 255, 0)
   cv2.putText(frame, f"FPS {fps:.1f}", (x,y), font, 0.55, fps_color, 1)
   y+=LINE_H + 6
 
@@ -74,13 +78,12 @@ while True:
   frame_count+=1
   if frame_count % SKIP_FRAMES == 0:
     # run inference on every other frame
+    # model is called like a function to analyze the current frame, specify imgsz for optimization
     last_results = model(frame, conf=CONFIDENCE_THRESHOLD, imgsz = 320, verbose=False)
 
   if not ret:
     print("Error: failed to read frame")
     break
-  # model is called like a function to analyze the current frame, specify imgsz for optimization
-  # results = model(frame, conf=CONFIDENCE_THRESHOLD, imgsz = 320, verbose=False)
 
   detection_counts = defaultdict(int)
   total_objects = 0
@@ -109,7 +112,11 @@ while True:
   prev_time = curr_time
 
   avg_fps = 1.0/(sum(fps_history) / len(fps_history)) # Average the frames
-  cv2.putText(frame, f"FPS: {avg_fps:.1f}", (10, 30), font, 0.9, (50, 200, 255), 2)
+  fps_color = (50, 200, 255)
+  if(avg_fps<10):
+    fps_color = (255, 0, 0)
+  elif(avg_fps>25):
+    fps_color = (0, 255, 0)
   draw_sidebar(frame, avg_fps, detection_counts, total_objects) # draw the sidebar
 
   cv2.imshow("Object Detection", frame)
