@@ -4,7 +4,7 @@ import time
 from collections import deque, defaultdict
 
 # Load model weights (small)
-model = YOLO("yolov8n.pt")
+model = YOLO("yolov8s.pt")
 # Open camera, can also use filepath for video
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
@@ -82,6 +82,8 @@ def draw_sidebar(frame, fps, detection_counts, total_objects):
 while True:
   # Frame is a 3d array containing image data
   ret, frame = cap.read()
+
+  frame = cv2.flip(frame, 1)
 
   frame_count+=1
   if frame_count % SKIP_FRAMES == 0:
