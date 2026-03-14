@@ -4,7 +4,8 @@ import time
 from collections import deque, defaultdict
 
 # Load model weights (small)
-model = YOLO("yolov8s.pt")
+model = YOLO("runs/detect/body_parts_detector/weights/best.pt")
+# model.val(data="dataset/data.yaml", plots=True)
 # Open camera, can also use filepath for video
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
@@ -89,7 +90,7 @@ while True:
   if frame_count % SKIP_FRAMES == 0:
     # run inference on every other frame
     # model is called like a function to analyze the current frame, specify imgsz for optimization
-    last_results = model(frame, conf=CONFIDENCE_THRESHOLD, imgsz = 320, verbose=False)
+    last_results = model(frame, conf=CONFIDENCE_THRESHOLD, verbose=False)
 
   if not ret:
     print("Error: failed to read frame")

@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['hand']
+
+roboflow:
+  workspace: catwithawand
+  project: hand-detection-fuao9
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/catwithawand/hand-detection-fuao9/dataset/2
