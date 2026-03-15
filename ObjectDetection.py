@@ -3,7 +3,7 @@ from ultralytics import YOLO
 import time
 from collections import deque, defaultdict
 
-# Load model weights (small)
+# Load model weights, human_body_detector or hand_detector
 model = YOLO("human_body_detector/weights/best.pt")
 
 # Open camera, can also use filepath for video
@@ -25,7 +25,7 @@ CONFIDENCE_THRESHOLD = 0.4
 prev_time = time.time()
 
 # Running inference on every other frame for optimization
-SKIP_FRAMES = 1
+SKIP_FRAMES = 2
 frame_count = 0
 last_results = [] # previous frame detections
 
