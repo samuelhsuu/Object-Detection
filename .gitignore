@@ -9,6 +9,7 @@ __pycache__/
 dataset/train/
 dataset/valid/
 dataset/test/
+dataset/hand_detector
 runs/
 
 # System files

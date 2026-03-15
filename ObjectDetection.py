@@ -4,8 +4,8 @@ import time
 from collections import deque, defaultdict
 
 # Load model weights (small)
-model = YOLO("runs/detect/body_parts_detector/weights/best.pt")
-# model.val(data="dataset/data.yaml", plots=True)
+model = YOLO("dataset/hand_detector/weights/best.pt")
+
 # Open camera, can also use filepath for video
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
