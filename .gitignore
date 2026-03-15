@@ -5,11 +5,12 @@ venv/
 __pycache__/
 *.pyc
 
-# Dataset images/labels
-dataset/train/
-dataset/valid/
-dataset/test/
-dataset/hand_detector
+# dataset images/labels
+hand_dataset/train/
+hand_dataset/valid/
+hand_dataset/test/
+hand_dataset/hand_detector
+human_body_detector
 runs/
 
 # System files

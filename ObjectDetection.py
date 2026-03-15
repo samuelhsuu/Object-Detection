@@ -4,7 +4,7 @@ import time
 from collections import deque, defaultdict
 
 # Load model weights (small)
-model = YOLO("dataset/hand_detector/weights/best.pt")
+model = YOLO("human_body_detector/weights/best.pt")
 
 # Open camera, can also use filepath for video
 cap = cv2.VideoCapture(0)
@@ -25,7 +25,7 @@ CONFIDENCE_THRESHOLD = 0.4
 prev_time = time.time()
 
 # Running inference on every other frame for optimization
-SKIP_FRAMES = 2
+SKIP_FRAMES = 1
 frame_count = 0
 last_results = [] # previous frame detections
 
